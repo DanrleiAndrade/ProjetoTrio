@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  backend:
+    build: ./Livraria
+    ports:
+      - 3001:3001
+    environment:
+      - DB_USER=root
+      - DB_PASS=password
+      - DB_NAME=livraria
+      - DB_HOST=db
+      - JWT_SECRET=7832trwhyoei
+    volumes:
+      - ./Livraria:/app-livraria
+    container_name: livraria_backend
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
