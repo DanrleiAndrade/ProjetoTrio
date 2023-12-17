@@ -5,6 +5,7 @@ import { resp, respM } from "../utils/resp";
 import BookCategory from "../database/models/BookCategory";
 import IBook from "../interfaces/IBook";
 import schema from "./validations/schema";
+import Wishlist from "../database/models/Wishlist";
 
 BookCategory.associations
 
@@ -39,6 +40,23 @@ class BookService {
         await BookCategory.bulkCreate(bookCategory)
 
         return resp(201, createdBook)
+    }
+
+    async wishlist(bookId: number, userId: number) {
+        const findBook = await this.model.findByPk(bookId);
+        if(!findBook) return respM(404, 'Book not found');
+        const book = await Wishlist.findOne({ where: {
+            bookId, userId
+        }})
+    
+        if(book) {
+            await Wishlist.destroy({ where: { bookId, userId }})
+            return resp(204, '')
+        }
+
+        await Wishlist.create({ bookId, userId})
+        return respM(201, 'add to wishlist')
+
     }
 
 

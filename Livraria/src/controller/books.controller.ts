@@ -21,6 +21,18 @@ class BookController {
             next(error)
         }
     }
+
+    async wishlist(req: Request, res: Response, next: NextFunction) {
+        try {
+            console.log(res.locals.user);
+            const { bookId } = req.params;
+            const userId = res.locals.user.id;
+            const { status, message } = await this.service.wishlist(+bookId, userId)
+            res.status(status).json(message)
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 export default BookController;

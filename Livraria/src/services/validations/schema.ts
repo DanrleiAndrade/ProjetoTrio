@@ -13,4 +13,16 @@ const book = joi.object({
     categories: joi.array().items(joi.number().required()).min(1).required()
 })
 
-export = { user, book }
+const itemSale = joi.object({
+    bookId: joi.number().integer().required(),
+    quantity: joi.number().integer().required()
+})
+
+const sale = joi.object({
+    total: joi.number().integer().required(),
+    date: joi.string().min(10).max(10).required(),
+    books: joi.array().items(itemSale).min(1).required(),
+    userId: joi.number().integer().required()
+})
+
+export = { user, book, sale }
