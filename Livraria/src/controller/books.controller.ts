@@ -1,0 +1,26 @@
+import { NextFunction, Request, Response } from "express";
+import BookService from "../services/books.service";
+
+class BookController {
+    private service = new BookService()
+
+    async get(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { status, message } = await this.service.get()
+            res.status(status).json(message)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async create(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { status, message } = await this.service.create(req.body)
+            res.status(status).json(message)
+        } catch (error) {
+            next(error)
+        }
+    }
+}
+
+export default BookController;

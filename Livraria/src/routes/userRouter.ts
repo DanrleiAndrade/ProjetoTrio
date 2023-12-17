@@ -7,4 +7,8 @@ const userRouter = Router();
 
 userRouter.get('/user', control.get.bind(control));
 
+userRouter.post('/login', control.login.bind(control));
+
+userRouter.post('/user', control.login.bind(control));
+
 export default userRouter;

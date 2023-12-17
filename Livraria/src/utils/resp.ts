@@ -1,3 +1,5 @@
 const resp = (s: number, m: unknown) => ({status: s, message: m})
 
-export default resp;
+const respM = (s: number, m: unknown) => ({status: s, message: {message: m}})
+
+export { resp, respM };
